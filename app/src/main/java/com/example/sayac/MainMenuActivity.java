@@ -11,6 +11,7 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -146,6 +147,27 @@ public class MainMenuActivity extends AppCompatActivity implements SensorEventLi
         setupClass.saveValues();
         setupClass.setCurrentValue(Integer.parseInt(value.getText().toString()));
     }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        int action = event.getAction();
+        int keyCode = event.getKeyCode();
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                if (action == KeyEvent.ACTION_DOWN) {
+                    valueChange(5,  mediaPlayer);
+                }
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                if (action == KeyEvent.ACTION_DOWN) {
+                    valueChange(-5, mediaPlayer);
+                }
+                return true;
+
+        }
+        return super.dispatchKeyEvent(event);
+    }
+
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
